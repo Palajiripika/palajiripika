@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Calculator</title>
+	<style>
+		body {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			background: #f0f0f0;
+		}
+		.calculator {
+			background: #222;
+			padding: 24px 18px 18px 18px;
+			border-radius: 16px;
+			box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+			width: 320px;
+		}
+		.display {
+			background: #111;
+			color: #fff;
+			font-size: 2.2em;
+			border-radius: 8px;
+			padding: 16px;
+			text-align: right;
+			margin-bottom: 18px;
+			min-height: 40px;
+			letter-spacing: 1px;
+			overflow-x: auto;
+		}
+		.buttons {
+			display: grid;
+			grid-template-columns: repeat(4, 1fr);
+			gap: 12px;
+		}
+		button {
+			font-size: 1.2em;
+			padding: 18px 0;
+			border: none;
+			border-radius: 8px;
+			background: #333;
+			color: #fff;
+			cursor: pointer;
+			transition: background 0.2s;
+		}
+		button:active {
+			background: #444;
+		}
+		.operator {
+			background: #ff9500;
+			color: #fff;
+		}
+		.operator:active {
+			background: #e08a00;
+		}
+		.equals {
+			background: #34c759;
+			color: #fff;
+		}
+		.equals:active {
+			background: #28a745;
+		}
+		.clear {
+			background: #ff3b30;
+			color: #fff;
+		}
+		.clear:active {
+			background: #c82333;
+		}
+	</style>
+</head>
+<body>
+	<div class="calculator">
+		<div class="display" id="display">0</div>
+		<div class="buttons">
+			<button class="clear" id="clear" style="grid-column: span 2;">C</button>
+            <button data-num=".">.</button>
+			<button class="operator" data-op="/">/</button>
+            <button data-num="7">7</button>
+			<button data-num="8">8</button>
+			<button data-num="9">9</button>
+			<button class="operator" data-op=""></button>
+            <button data-num="4">4</button>
+			<button data-num="5">5</button>
+			<button data-num="6">6</button>
+			<button class="operator" data-op="-">−</button>
+			<button data-num="1">1</button>
+			<button data-num="2">2</button>
+			<button data-num="3">3</button>
+			<button class="operator" data-op="+">+</button>
+		
+			<button data-num="0">0</button>
+            <button data-num="00">00</button>
+            <button class="equals" id="equals" style="grid-column: span 2;">=</button>
+			
+		</div>
+	</div>
+	<script>
+		const display = document.getElementById('display');
+		const buttons = document.querySelectorAll('button');
+		let current = '';
+		let operator = '';
+		let operand = '';
+		let resultShown = false;
+
+		function updateDisplay(val) {
+			display.textContent = val;
+		}
+
+		function resetCalculator() {
+			current = '';
+			operator = '';
+			operand = '';
+			resultShown = false;
+			updateDisplay('0');
+		}
+
+		function calculate(a, op, b) {
+			a = parseFloat(a);
+			b = parseFloat(b);
+			if (isNaN(a) || isNaN(b)) return '';
+			switch(op) {
+				case '+': return (a + b).toString();
+				case '-': return (a - b).toString();
+				case '*': return (a * b).toString();
+				case '/': return b === 0 ? 'Error' : (a / b).toString();
+				default: return '';
+			}
+		}
+
+		buttons.forEach(btn => {
+			btn.addEventListener('click', () => {
+				if (btn.id === 'clear') {
+					resetCalculator();
+					return;
+				}
+				if (btn.hasAttribute('data-num')) {
+					if (resultShown) {
+						current = '';
+						resultShown = false;
+					}
+					let num = btn.getAttribute('data-num');
+					if (num === '.' && current.includes('.')) return;
+					if (current === '0' && num !== '.') current = '';
+					current += num;
+					updateDisplay(current);
+					return;
+				}
+				if (btn.hasAttribute('data-op')) {
+					if (current === '' && operand === '') return;
+					if (operator && current !== '') {
+						operand = calculate(operand, operator, current);
+						updateDisplay(operand);
+						current = '';
+					} else if (current !== '') {
+						operand = current;
+						current = '';
+					}
+					operator = btn.getAttribute('data-op');
+					resultShown = false;
+					return;
+				}
+				if (btn.id === 'equals') {
+					if (!operator || current === '' || operand === '') return;
+					let res = calculate(operand, operator, current);
+					updateDisplay(res);
+					operand = res === 'Error' ? '' : res;
+					current = '';
+					operator = '';
+					resultShown = true;
+					return;
+				}
+			});
+		});
+		resetCalculator();
+	</script>
+</body>
+</html>
+<!DOCTYPE html>

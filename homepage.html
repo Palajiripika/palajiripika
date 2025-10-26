@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkillCraft Technology - Landing Page</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      background: transparent;
+      transition: background 0.4s, box-shadow 0.4s;
+      z-index: 1000;
+    }
+
+    .navbar.scrolled {
+      background: #111;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .logo {
+      color: #fff;
+      font-size: 1.6em;
+      font-weight: bold;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    .nav-links li a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.1em;
+      transition: color 0.3s, border-bottom 0.3s;
+    }
+
+    .nav-links li a:hover {
+      color: #00bcd4;
+      border-bottom: 2px solid #00bcd4;
+    }
+
+    /* Section Styling */
+    section {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      padding: 60px;
+    }
+
+    #home {
+      background: linear-gradient(135deg, #00bcd4, #0097a7);
+    }
+
+    #about {
+      background: linear-gradient(135deg, #1a1a1a, #292929);
+    }
+
+    #services {
+      background: linear-gradient(135deg, #292929, #1a1a1a);
+    }
+
+    #contact {
+      background: linear-gradient(135deg, #00bcd4, #006064);
+    }
+
+    .btn {
+      background: white;
+      color: #0097a7;
+      padding: 10px 25px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      margin-top: 20px;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background: #f1f1f1;
+    }
+
+    /* Responsive Menu */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      height: 3px;
+      width: 25px;
+      background: #fff;
+      margin: 4px 0;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        position: absolute;
+        top: 70px;
+        right: 0;
+        background: #111;
+        flex-direction: column;
+        width: 100%;
+        display: none;
+        padding: 20px 0;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      .navbar {
+        padding: 15px 25px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">SkillCraft</div>
+      <div class="menu-toggle" id="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Landing Page Sections -->
+  <section id="home">
+    <h1>Welcome to SkillCraft Technology</h1>
+    <p>Empowering learners through real-world skill development.</p>
+    <a href="#about" class="btn">Explore More</a>
+  </section>
+
+  <section id="about">
+    <h2>About Us</h2>
+    <p>We offer project-based learning to help students gain hands-on experience.</p>
+  </section>
+
+  <section id="services">
+    <h2>Our Services</h2>
+    <p>Providing internships, live projects, and skill enhancement programs.</p>
+  </section>
+
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <p>Email: info@skillcraft.com | Phone: +91 98765 43210</p>
+  </section>
+
+  <!-- JavaScript -->
+  <script>
+    // Scroll effect for navbar
+    window.addEventListener("scroll", function() {
+      const navbar = document.querySelector(".navbar");
+      if (window.scrollY > 50) {
+        navbar.classList.add("scrolled");
+      } else {
+        navbar.classList.remove("scrolled");
+      }
+    });
+
+    // Responsive toggle menu
+    const menuToggle = document.getElementById("menu-toggle");
+    const navLinks = document.getElementById("nav-links");
+
+    menuToggle.addEventListener("click", () => {
+      navLinks.classList.toggle("active");
+    });
+  </script>
+</body>
+</html>
